@@ -2,7 +2,7 @@
 
 ## Instalacion de servidor
 
-- ```bash $ cd OwlEvents-Api```
+- `bash $ cd OwlEvents-Api`
 - Configurar el config.json
 - Configurar firebase
     - Crear una cuenta en firebase y un proyecto.
@@ -10,7 +10,7 @@
     - Conseguir el json de credenciales
         - Configuracion > Cuentas de Servicio > Generar nueva clave privada
         - Renombrar el archivo generado a credentials.js y guardarlos en /config
-- ```bash $ npm install```
+- `bash $ npm install`
 -  Y a disfrutar
 
 ## TODOS
