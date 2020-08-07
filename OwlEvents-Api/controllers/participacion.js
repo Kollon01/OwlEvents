@@ -3,6 +3,7 @@ const Op            = Sequelize.Op;
 const participacion = require('../models').participacion;
 const usuario       = require('../models').usuario;
 const juego         = require('../models').juego;
+
 module.exports = {
   create(req, res) {
           // Usuario
