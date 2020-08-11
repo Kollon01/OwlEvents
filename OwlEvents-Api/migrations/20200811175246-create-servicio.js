@@ -12,13 +12,23 @@ module.exports = {
         type: Sequelize.STRING
       },
       clasificacionServ: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+             model: 'usuarios',
+             key: 'id'
+        },
       },
       estadoServicio: {
         type: Sequelize.BOOLEAN
       },
       encargadoServicio: {
-        type: Sequelize.STRING
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+             model: 'usuarios',
+             key: 'id'
+        },
       },
       descripcionServicio: {
         type: Sequelize.TEXT

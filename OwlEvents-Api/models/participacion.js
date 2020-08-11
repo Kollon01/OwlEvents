@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       participacion.belongsTo(models.usuario,
         {
             as: 'usuario',
-            foreignKey: 'usuario_id',
+            foreignKey: 'jugador_id',
         }
       );
       participacion.belongsTo(models.juego,
@@ -29,11 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     jugador_id: DataTypes.INTEGER,
     juego_id: {
       type: DataTypes.INTEGER,
-      allowNull: true,
-      references: {
-           model: 'juego',
-           key: 'id'
-      },
+      allowNull: true
   },
     status: DataTypes.CHAR
   }, {

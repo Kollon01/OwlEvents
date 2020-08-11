@@ -9,11 +9,16 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       jugador_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+             model: 'usuarios',
+             key: 'id'
+        },
       },
       juego_id: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
              model: 'juegos',
              key: 'id'

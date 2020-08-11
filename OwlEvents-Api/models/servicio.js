@@ -11,13 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      servicio.belongsTo(models.usuario,
+        {
+            as: 'encargado',
+            foreignKey: 'encargadoServicio',
+        }
+      );
+      servicio.belongsTo(models.clasificacion,
+        {
+            as: 'clasificacion',
+            foreignKey: 'clasificacionServ',
+        }
+      );
     }
   };
   servicio.init({
     nombreServicio: DataTypes.STRING,
     clasificacionServ: DataTypes.INTEGER,
     estadoServicio: DataTypes.BOOLEAN,
-    encargadoServicio: DataTypes.STRING,
+    encargadoServicio: DataTypes.INTEGER,
     descripcionServicio: DataTypes.TEXT
   }, {
     sequelize,
