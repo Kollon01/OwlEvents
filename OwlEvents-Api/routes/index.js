@@ -2,6 +2,7 @@
 const usuarioController             = require("../controllers/usuario");
 const juegoController               = require('../controllers/juego');
 const participacionController       = require('../controllers/participacion');
+const serviceController             = require('../controllers/servicios');
 
 const authMiddleware = require("../middlewares/auth-middleware");
 
@@ -31,4 +32,8 @@ module.exports = (app) => {
    app.get('/api/participacion/list', participacionController.list);
 
    app.get('/api/participacion/find', participacionController.find);
+
+   //* Estoy hay que cambiarlo para que el archivo de rutas no crezca. Sino tener este de master para importar rutas*/
+   
+   app.get('/api/services/all', serviceController.list);
 };
