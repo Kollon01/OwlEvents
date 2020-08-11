@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       encargadoServicio: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       descripcionServicio: {
         type: Sequelize.TEXT
