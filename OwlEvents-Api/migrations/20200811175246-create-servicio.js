@@ -20,6 +20,9 @@ module.exports = {
       encargadoServicio: {
         type: Sequelize.INTEGER
       },
+      descripcionServicio: {
+        type: Sequelize.TEXT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
