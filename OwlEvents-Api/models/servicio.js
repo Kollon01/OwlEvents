@@ -18,6 +18,29 @@ module.exports = (sequelize, DataTypes) => {
     clasificacionServ: DataTypes.INTEGER,
     estadoServicio: DataTypes.BOOLEAN,
     encargadoServicio: DataTypes.STRING,
+    encargado: {
+      type: DataTypes.VIRTUAL,
+      get() {
+
+        //este bicho postiso hay que ponerle un nombre fino y traero con un require desde arriba.
+        if(this.encargadoServicio === "ENMANUELUIDD") {
+          return {
+            'Nombre': "Enmanuel Marval",
+            'photoUrl': "www.imagen.com"
+          }
+        }
+
+        // aca va la llamada a firebase para sacar la info del usuario.
+        // Lo de arriba hay que refactorizarlo para extrar el usuario de prueba
+        return {
+            'Nombre': "Enmanuel Marval",
+            'photoUrl': "www.imagen.com"
+          };
+      },
+      set(value) {
+        throw new Error('Do not try to set the `fullName` value!');
+      }
+    },
     descripcionServicio: DataTypes.TEXT
   }, {
     sequelize,
