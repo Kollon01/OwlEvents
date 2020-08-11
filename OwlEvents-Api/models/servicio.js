@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     nombreServicio: DataTypes.STRING,
     clasificacionServ: DataTypes.INTEGER,
     estadoServicio: DataTypes.BOOLEAN,
-    encargadoServicio: DataTypes.INTEGER
+    encargadoServicio: DataTypes.STRING,
+    descripcionServicio: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'servicio',
