@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       servicio.belongsTo(models.usuario,
         {
-            as: 'encargado',
+            as: 'encargados',
             foreignKey: 'encargadoServicio',
         }
       );
@@ -29,9 +29,6 @@ module.exports = (sequelize, DataTypes) => {
     nombreServicio: DataTypes.STRING,
     clasificacionServ: DataTypes.INTEGER,
     estadoServicio: DataTypes.BOOLEAN,
-<<<<<<< HEAD
-    encargadoServicio: DataTypes.INTEGER,
-=======
     encargadoServicio: DataTypes.STRING,
     encargado: {
       type: DataTypes.VIRTUAL,
@@ -56,7 +53,6 @@ module.exports = (sequelize, DataTypes) => {
         throw new Error('Do not try to set the `fullName` value!');
       }
     },
->>>>>>> 919972fb80733a240ddefb15db01d42da5c8892d
     descripcionServicio: DataTypes.TEXT
   }, {
     sequelize,
