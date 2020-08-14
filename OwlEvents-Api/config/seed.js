@@ -1,21 +1,14 @@
 const Classification = require('../models').Classification;
+const classificationSeed = require("../seeds/classification.seed");
 
+const Services = require('../models').Services;
+const ServicesSeed = require("../seeds/services.seed");
 //esto se va a mejorar luego. Por ahora hagamos un metodo para caa uno
-const seedClassification = async () => {
-    return await Classification.bulkCreate([
-        { name: 'Automovil', iconUrl: "https://picsum.photos/200", description: "Servicio tecnico, reparaciones, auto-partes, etc"},
-        { name: 'Alimentos', iconUrl: "https://picsum.photos/200", description: "Bartender, Comida para fiestas"},
-        { name: 'Educacion', iconUrl: "https://picsum.photos/200", description: "Educacion en general"},
-        { name: 'Fiesta', iconUrl: "https://picsum.photos/200", description: "Ya me aburri de llenar datos"},
-        { name: 'Apartamentos', iconUrl: "https://picsum.photos/200", description: "Ya me aburri de llenar datos"}
-    ]);
+const createSeeds = async () => {
+     await Classification.bulkCreate(classificationSeed);
+     await Services.bulkCreate(ServicesSeed);
 }
-
-const seedServices = async (classifications) => {
-    //por cada categoria crear al menos 2 servicios con datos lorem ipsum
-}
-
 
 module.exports.seedDB = () => {
-    let classifications = seedClassification();
+    createSeeds(); 
 }
