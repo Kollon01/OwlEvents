@@ -1,10 +1,12 @@
-
 'use strict';
 const {
   Model
 } = require('sequelize');
+
+const { v4: uuidv4 } = require('uuid');
+
 module.exports = (sequelize, DataTypes) => {
-  class clasificacion extends Model {
+  class Classification extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,16 +16,21 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  clasificacion.init({
+  Classification.init({
     id: {
-          primaryKey: true,
-          type: DataTypes.UUID
-        },
-    nombre: DataTypes.STRING,
-    iconURL: DataTypes.STRING
+      type: DataTypes.UUID,
+      primaryKey: true,
+      allowNull: false,
+      defaultValue: () => uuidv4(),
+    },
+    name: DataTypes.STRING,
+    iconUrl: DataTypes.STRING,
+    description: DataTypes.STRING,
   }, {
     sequelize,
-    modelName: 'clasificacion',
+    timestamps: false,
+    modelName: 'Classification',
   });
-  return clasificacion;
+
+  return Classification;
 };
