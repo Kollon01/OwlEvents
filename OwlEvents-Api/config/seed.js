@@ -1,10 +1,8 @@
 const _ = require('lodash');
-
+const faker = require('faker');
 const Classification = require("../models").Classification;
 const classificationSeed = require("../seeds/classification.seed");
-
 const Services = require("../models").Service;
-const ServicesSeed = require("../seeds/services.seed");
 
 const seedClassification = async () => {
     return Classification.bulkCreate(classificationSeed, {
@@ -13,8 +11,15 @@ const seedClassification = async () => {
     });
 }
 
-const seedServices = async (ServicesSeed) => {
-    return Services.bulkCreate(ServicesSeed);
+const seedServices = async (classifications, total = 10) => {
+
+    let ServicesSeeds = [...new Array(total)].map(()=> ({
+        title: faker.random.words(),
+        body: faker.lorem.paragraphs(),
+        ClassificationId: getRandomModel(classifications).id
+    }));
+
+    return Services.bulkCreate(ServicesSeeds);
 }
 
 const getRandomModel = (modelCollection) => {
@@ -24,12 +29,7 @@ const getRandomModel = (modelCollection) => {
 const createSeeds = async () => {
 
     let classifications = await seedClassification();
-
-    ServicesSeed.forEach((serv, index) => {
-        ServicesSeed[index].ClassificationId = getRandomModel(classifications).id;
-    });
-
-    await seedServices(ServicesSeed);
+    await seedServices(classifications, 15);
 };
 
 module.exports.seedDB = () => {

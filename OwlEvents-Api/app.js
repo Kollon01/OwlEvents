@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Importa todas las rutas
 require('./routes')(app);
 
-const port = parseInt(process.env.PORT, 10) || 8000;
+const port = parseInt(process.env.PORT, 10) || 8001;
 app.set('port', port);
 
 // Setting up bd

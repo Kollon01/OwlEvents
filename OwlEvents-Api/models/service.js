@@ -16,7 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Service.init({
-    name: DataTypes.STRING,
     title: DataTypes.STRING,
     body: DataTypes.TEXT,
   }, {
