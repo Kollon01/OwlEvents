@@ -12,13 +12,13 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.Service.belongsTo(models.Classification, { allowNull: false});
+      models.Service.belongsTo(models.Classification);
     }
   };
   Service.init({
     name: DataTypes.STRING,
     title: DataTypes.STRING,
-    body: DataTypes.TEXT
+    body: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'Service',
