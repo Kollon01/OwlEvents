@@ -58,14 +58,11 @@ findById (req, res) {
             order: [
                 ['createdAt', 'ASC']
             ],
-            offset: 10,
+            offset: 0,
             limit: 2
         })
         .then(services => {
-            console.log(req.body.title, "Este es el titulo"); 
-            console.log(services.count, "Este es el contador");
-            console.log(services.rows, "Este es el resultado"); 
-            res.status(200).send(service)
+            res.status(200).send(services)
         })
         .catch(error => res.status(400).send(error))
     },

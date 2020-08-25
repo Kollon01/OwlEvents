@@ -5,14 +5,14 @@ const logger                    = require('morgan');
 const bodyParser                = require('body-parser');
 const Models = require('./models');
 const Seeder = require('./config/seed');
-
+const cors = require("cors"); 
 const http = require('http');
 // Set up the express app
 const app = express();
 
 // Log requests to the console.
 app.use(logger('dev'));
-
+app.use(cors()); 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 

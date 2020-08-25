@@ -12,3 +12,4 @@ module.exports = function (app) {
    //filtro example
    //app.get('/api/classification/example', classificationController.findByTitleExpample);
 };
+
