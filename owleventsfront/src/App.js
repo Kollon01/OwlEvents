@@ -1,28 +1,33 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import httpInstance from "./services/http.service";
 
+function App() {
 
-class App extends React.Component {
-  state = {
-    personas: []
-  }; 
-  componentDidMount() {
-    httpInstance.get(`http://localhost:8001/api/services/all`)
-      .then(res => {
-        const personas = res.data;
-        console.log(personas);
-        this.setState({ personas });
-      })
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getServices();
+
+  }, []);
+  
+  const getServices = async () => {
+    const serv = await httpInstance.get(`http://localhost:8001/api/services/all`);
+    setData(serv.data);
+    console.log(serv.data, "la data");
   }
-  render() {
+
     return (
       <div className="App">
-        hola
-        
+        <ul>
+          {
+            data.map(item => (
+            <li key={item.id}>{item.title} - {item.body}</li>
+            ))
+          }
+        </ul>
       </div>
     );
-  }
 }
 
 export default App;
