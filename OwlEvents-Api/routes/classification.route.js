@@ -3,13 +3,11 @@ const classificationController = require('../controllers/classification');
 const authMiddleware = require("../middlewares/auth-middleware");
 
 module.exports = function (app) {
-   app.get('/api/testMiddleware', authMiddleware, classificationController.find)
-   app.get('/api/classification/all', classificationController.find);
+   //app.get('/api/testMiddleware', authMiddleware, classificationController.find)
    app.post('/api/classification/create', classificationController.create);
-   //app.get('/api/classification/find/:id', classificationController.findById);
-   app.get('/api/classification/findByName', classificationController.findByName);
+   app.get('/api/classification/:id', classificationController.get);
+   app.delete('/api/classification/:id', classificationController.delete);
+   app.get('/api/classification', classificationController.find);
 
-   //filtro example
-   //app.get('/api/classification/example', classificationController.findByTitleExpample);
 };
 

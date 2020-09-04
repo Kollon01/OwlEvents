@@ -1,21 +1,23 @@
 const { Op, Sequelize }     = require('sequelize');
-/*const Service       = require('../models').Service;*/
 const Classification = require("../models").Classification; 
 
-/*
-- Buscar(Todo): Si,
-- Crear: Si,
-- Buscar(ByTitle): Si,
-*/ 
+const getPagination = (page, size) => {
+    const limit = size ? +size : 10;
+    const offset = page ? page * limit : 0;
+  
+    return { limit, offset };
+};
+  
+const getPagingData = (data, page, limit) => {
+    const { count: totalItems, rows: classifications } = data;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+  
+    return { totalItems, classifications, totalPages, currentPage };
+};
 
 module.exports = {
-//Buscar
-    find( req, res) {
-        return Classification.findAll({})
-            .then(classification => res.status(200).send(classification))
-            .catch(error => res.status(400).send(error))
-    },
-//Crear    
+  
     create(req, res) {
         return Classification
             .create ({
@@ -28,48 +30,43 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error))
     },
-//Buscar por Name
-    findByName (req, res) {
+    get (req, res) {
         return Classification.findAll({
             where: {
-                name: req.body.name,
+                id: req.params.id,
             }
         })
         .then(classification => res.status(200).send(classification))
         .catch(error => res.status(400).send(error))
     },
-//Buscar por id
-findById (req, res) {
-    return Classification.findAll({
-        where: {
-            id: req.params.id,
-        }
-    })
-    .then(classification => res.status(200).send(classification))
-    .catch(error => res.status(400).send(error))
-},
-/*
-//Ejemplo de Filtro, no se que pasa que cuando coloco offset y limit no me arroja los registros encontrados.
-    findByTitleExpample (req, res) {
-        return Service.findAndCountAll({
+    delete (req, res) {
+        return Classification.destroy({
             where: {
-                title: { 
-                  [Op.like]: req.body.title + "%"
-                }
-            },
-            order: [
-                ['createdAt', 'ASC']
-            ],
-            offset: 10,
-            limit: 2
+                id: req.params.id,
+            }
         })
-        .then(services => {
-            console.log(req.body.title, "Este es el titulo"); 
-            console.log(services.count, "Este es el contador");
-            console.log(services.rows, "Este es el resultado"); 
-            res.status(200).send(service)
+        .then(classification => res.status(200).send(classification))
+        .catch(error => res.status(400).send(error))
+    },
+    find (req, res) {
+
+        const { page, size, name = '', description = ''} = req.query;
+        const { limit, offset } = getPagination(page, size);
+
+        return Classification.findAndCountAll({
+            offset: offset,
+            limit: limit,
+            where: {
+                [Op.and]: [
+                    { name:         { [Op.like]: '%'+name+'%'} },
+                    { description:  { [Op.like]: '%'+description+'%'} },
+                ]
+            }
+        })
+        .then(classifications => {
+            const response = getPagingData(classifications, page, limit);
+            res.status(200).send(response)
         })
         .catch(error => res.status(400).send(error))
     },
-*/
 };
