@@ -1,20 +1,22 @@
 const { Op, Sequelize }     = require('sequelize');
 const Service       = require('../models').Service;
 
-/*
-- Buscar(Todo): Si,
-- Crear: Si,
-- Buscar(ByTitle): Si,
-*/ 
+const getPagination = (page, size) => {
+    const limit = size ? +size : 10;
+    const offset = page ? page * limit : 0;
+  
+    return { limit, offset };
+};
+  
+const getPagingData = (data, page, limit) => {
+    const { count: totalItems, rows: services } = data;
+    const currentPage = page ? +page : 0;
+    const totalPages = Math.ceil(totalItems / limit);
+  
+    return { totalItems, services, totalPages, currentPage };
+};
 
 module.exports = {
-//Buscar
-    find( req, res) {
-        return Service.findAll({})
-            .then(Services => res.status(200).send(Services))
-            .catch(error => res.status(400).send(error))
-    },
-//Crear    
     create(req, res) {
         return Service
             .create ({
@@ -27,44 +29,44 @@ module.exports = {
             })
             .catch(error => res.status(400).send(error))
     },
-//Buscar por Titulo
-    findByTitle (req, res) {
+    get (req, res) {
         return Service.findAll({
             where: {
-                title: req.body.title,
+                id: req.params.id,
             }
         })
         .then(service => res.status(200).send(service))
         .catch(error => res.status(400).send(error))
     },
-//Buscar por id
-findById (req, res) {
-    return Service.findAll({
-        where: {
-            id: req.params.id,
-        }
-    })
-    .then(service => res.status(200).send(service))
-    .catch(error => res.status(400).send(error))
-},
-//Ejemplo de Filtro, no se que pasa que cuando coloco offset y limit no me arroja los registros encontrados.
-    findByTitleExpample (req, res) {
-        return Service.findAndCountAll({
+    delete (req, res) {
+        return Service.destroy({
             where: {
-                title: { 
-                  [Op.like]: req.body.title + "%"
-                }
-            },
+                id: req.params.id,
+            }
+        })
+        .then(service => res.status(200).send(service))
+        .catch(error => res.status(400).send(error))
+    },
+    find( req, res) {
+        const { page, size, title = ''} = req.query;
+        const { limit, offset } = getPagination(page, size);
+
+        return Service.findAndCountAll({
+            offset: offset,
+            limit: limit,
             order: [
-                ['createdAt', 'ASC']
+                ['createdAt', 'DESC'],
             ],
-            offset: 0,
-            limit: 2
+            where: {
+                [Op.and]: [
+                    { title:         { [Op.like]: '%'+title+'%'} }
+                ]
+            }
         })
         .then(services => {
-            res.status(200).send(services)
+            const response = getPagingData(services, page, limit);
+            res.status(200).send(response)
         })
         .catch(error => res.status(400).send(error))
     },
-
 };
