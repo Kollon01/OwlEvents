@@ -1,7 +1,6 @@
 
 import React, {useState, useEffect} from 'react';
 import { useQuery } from 'react-query'
-import httpInstance from "../services/http.service";
 
 const MainPage = () => {
 
@@ -17,7 +16,7 @@ const MainPage = () => {
 
     return (
 
-        <div className="App">
+        <div className="service-container">
             <ul>
             {
                 services.map(service => (

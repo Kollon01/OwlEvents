@@ -1,5 +1,6 @@
 import React from 'react';
 import MainPage from '../pages/mainPage';
+import Login from '../pages/login';
 import DemoPage from '../pages/demoPage.js';
 
 import {
@@ -10,8 +11,12 @@ import {
 
 function App() {
   return (
-    <Router>
+    <div className="App">
+      <Router>
       <Switch>
+        <Route path="/login">
+          <Login />
+        </Route>
         <Route path="/">
           <MainPage />
         </Route>
@@ -20,6 +25,7 @@ function App() {
         </Route>
       </Switch>
     </Router>
+    </div>
   );
 }
 
